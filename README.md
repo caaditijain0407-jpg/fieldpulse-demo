@@ -4,7 +4,7 @@
 
 FieldPulse captures unstructured field conversations, structures them with AI, and distributes actionable signals to the right people — by role, in real time.
 
-🔗 **[Live Demo](DEMO_URL_HERE)** · 📄 **[Project Page](PROJECT_PAGE_URL_HERE)** · 👤 **[Built by Aditi Jain](https://aditijainprojects.com)**
+🔗 **[Live Demo](https://fieldpulse-demo.netlify.app)** · 📄 **[Project Page](https://aditijainprojects.com/#projects)** · 👤 **[Built by Aditi Jain](https://aditijainprojects.com)**
 
 ---
 
