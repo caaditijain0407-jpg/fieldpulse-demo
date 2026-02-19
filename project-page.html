@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FieldPulse — AI-Powered Field Intelligence Platform</title>
+  <meta name="description" content="FieldPulse captures unstructured field conversations, structures them with AI, and distributes intelligence by role. Built for any industry with field teams." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #F8FAFC; --white: #FFFFFF; --border: #E2E8F0; --border-light: #F1F5F9;
+      --indigo: #4F46E5; --indigo-bg: #EEF2FF; --indigo-ring: #E0E7FF;
+      --green: #059669; --green-bg: #ECFDF5;
+      --amber: #D97706; --amber-bg: #FFFBEB;
+      --red: #DC2626; --red-bg: #FEF2F2;
+      --purple: #9333EA; --purple-bg: #FAF5FF;
+      --text: #0F172A; --sec: #334155; --muted: #64748B; --label: #94A3B8;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 30px rgba(0,0,0,0.1);
+      --font: 'Plus Jakarta Sans', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    nav .inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    nav .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    nav .logo-icon { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, #4F46E5, #7C3AED); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 800; }
+    nav .logo-text { font-size: 16px; font-weight: 800; color: var(--text); }
+    nav .links { display: flex; gap: 6px; }
+    nav .links a { padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; transition: all 0.15s; }
+    nav .links a:hover { color: var(--indigo); background: var(--indigo-bg); }
+    nav .links a.cta { background: var(--indigo); color: #fff; }
+    nav .links a.cta:hover { filter: brightness(1.1); }
+
+    /* HERO */
+    .hero { max-width: 1100px; margin: 0 auto; padding: 80px 24px 60px; text-align: center; }
+    .hero .pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px; background: var(--indigo-bg); color: var(--indigo); font-size: 12px; font-weight: 700; margin-bottom: 20px; }
+    .hero h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 800; line-height: 1.15; color: var(--text); margin-bottom: 16px; }
+    .hero h1 span { background: linear-gradient(135deg, #4F46E5, #9333EA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero .sub { font-size: 17px; color: var(--muted); max-width: 640px; margin: 0 auto 32px; line-height: 1.7; }
+    .hero .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .hero .btns a { padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.15s; }
+    .hero .btns .primary { background: var(--indigo); color: #fff; box-shadow: 0 4px 14px rgba(79,70,229,0.3); }
+    .hero .btns .primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,70,229,0.4); }
+    .hero .btns .secondary { background: var(--white); color: var(--sec); border: 1px solid var(--border); }
+    .hero .btns .secondary:hover { border-color: var(--indigo); color: var(--indigo); }
+
+    /* SECTION */
+    section { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+    section.alt { background: var(--white); max-width: 100%; }
+    section.alt .inner { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+    .section-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--indigo); background: var(--indigo-bg); padding: 4px 12px; border-radius: 6px; margin-bottom: 12px; text-transform: uppercase; }
+    .section-title { font-size: 28px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .section-sub { font-size: 15px; color: var(--muted); max-width: 600px; margin-bottom: 36px; line-height: 1.6; }
+
+    /* DEMO EMBED */
+    .demo-frame { width: 100%; height: 700px; border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-lg); background: var(--white); overflow: hidden; }
+    .demo-frame iframe { width: 100%; height: 100%; border: none; }
+
+    /* PROBLEM CARDS */
+    .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .problem-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: var(--shadow); }
+    .problem-card .icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 12px; }
+    .problem-card h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .problem-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* HOW IT WORKS */
+    .flow { display: flex; gap: 0; align-items: flex-start; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+    .flow-step { flex: 1; min-width: 160px; max-width: 200px; text-align: center; position: relative; padding: 0 12px; }
+    .flow-step .num { width: 36px; height: 36px; border-radius: 18px; background: var(--indigo); color: #fff; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
+    .flow-step h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .flow-step p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .flow-arrow { display: flex; align-items: center; padding-top: 6px; color: var(--label); font-size: 20px; }
+
+    /* TECH STACK */
+    .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .tech-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 24px; box-shadow: var(--shadow); }
+    .tech-card h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .tech-card h3 .dot { width: 8px; height: 8px; border-radius: 4px; }
+    .tech-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-light); }
+    .tech-item:last-child { border-bottom: none; }
+    .tech-item .name { font-size: 13px; font-weight: 600; color: var(--text); min-width: 120px; font-family: var(--mono); }
+    .tech-item .desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* ARCHITECTURE */
+    .arch-layers { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+    .arch-layer { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 20px 24px; display: flex; align-items: center; gap: 16px; box-shadow: var(--shadow); }
+    .arch-layer .layer-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .arch-layer h4 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .arch-layer p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .arch-layer .tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+    .arch-layer .tags span { padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; font-family: var(--mono); background: var(--bg); color: var(--sec); border: 1px solid var(--border); }
+
+    /* INTEGRATIONS */
+    .int-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+    .int-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; box-shadow: var(--shadow); }
+    .int-card .emoji { font-size: 28px; margin-bottom: 6px; }
+    .int-card h4 { font-size: 13px; font-weight: 700; color: var(--text); }
+    .int-card p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* INDUSTRIES */
+    .ind-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+    .ind-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 24px; box-shadow: var(--shadow); border-left: 4px solid transparent; transition: all 0.2s; }
+    .ind-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .ind-card .ind-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .ind-card .ind-icon { width: 44px; height: 44px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .ind-card h3 { font-size: 15px; font-weight: 700; color: var(--text); }
+    .ind-card .ind-role { font-size: 11px; color: var(--muted); }
+    .ind-card p { font-size: 13px; color: var(--sec); line-height: 1.6; margin-bottom: 10px; }
+    .ind-card .signals { display: flex; flex-wrap: wrap; gap: 4px; }
+    .ind-card .signals span { padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 600; }
+    .sig-green { background: var(--green-bg); color: var(--green); }
+    .sig-amber { background: var(--amber-bg); color: var(--amber); }
+    .sig-red { background: var(--red-bg); color: var(--red); }
+    .sig-purple { background: var(--purple-bg); color: var(--purple); }
+
+    /* CTA */
+    .cta-section { text-align: center; padding: 80px 24px; }
+    .cta-section h2 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+    .cta-section p { font-size: 15px; color: var(--muted); margin-bottom: 28px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .cta-section .btns { display: flex; gap: 12px; justify-content: center; }
+    .cta-section .btns a { padding: 12px 28px; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 12px; color: var(--label); }
+    footer a { color: var(--indigo); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .tech-grid { grid-template-columns: 1fr; }
+      .flow { flex-direction: column; align-items: center; }
+      .flow-arrow { transform: rotate(90deg); }
+      .demo-frame { height: 500px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">⚡</div>
+      <span class="logo-text">FieldPulse</span>
+    </a>
+    <div class="links">
+      <a href="#problem">Problem</a>
+      <a href="#demo">Demo</a>
+      <a href="#tech">Tech</a>
+      <a href="#industries">Industries</a>
+      <a href="https://github.com/YOUR_USERNAME/fieldpulse-demo" target="_blank" class="cta">GitHub ↗</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="pill">⚡ AI-Powered Field Intelligence</div>
+  <h1>Your field teams talk to customers every day.<br/><span>That intelligence is getting lost.</span></h1>
+  <p class="sub">FieldPulse captures unstructured field conversations via WhatsApp-style bots, structures them with AI, and distributes actionable signals to the right people — by role, in real time.</p>
+  <div class="btns">
+    <a href="#demo" class="primary">Try the Interactive Demo ↓</a>
+    <a href="https://github.com/YOUR_USERNAME/fieldpulse-demo" target="_blank" class="secondary">View on GitHub</a>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="section-label">The Problem</div>
+  <div class="section-title">Field intelligence dies in WhatsApp messages</div>
+  <p class="section-sub">Every day, your field team has conversations worth crores. Most of it never reaches the people who need it.</p>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="icon" style="background:var(--red-bg)">🔇</div>
+      <h3>Intelligence Loss</h3>
+      <p>Field reps capture valuable intel — competitor activity, upsell signals, risk flags — but it stays in their heads or scattered chats.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon" style="background:var(--amber-bg)">⏳</div>
+      <h3>Delayed Visibility</h3>
+      <p>Leadership learns about opportunities and risks days or weeks later — in weekly calls, if at all. By then, competitors have moved.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon" style="background:var(--purple-bg)">🚪</div>
+      <h3>Knowledge Walks Out</h3>
+      <p>When a field rep leaves, years of relationship context and market intelligence disappear overnight.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon" style="background:var(--indigo-bg)">📊</div>
+      <h3>CRM Doesn't Capture This</h3>
+      <p>CRMs track deals and contacts. They don't capture "Developer X just bought land" or "Competitor Y is offering 2% lower rates."</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="alt" id="how">
+  <div class="inner">
+    <div class="section-label">How It Works</div>
+    <div class="section-title">One message → AI structures → Everyone sees it</div>
+    <p class="section-sub">Designed for field workers who have 30 seconds between meetings. Zero friction capture.</p>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="num">1</div>
+        <h4>Field Rep Logs a Note</h4>
+        <p>One natural language message via WhatsApp bot. No forms, no dropdowns. Voice notes supported.</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="num">2</div>
+        <h4>AI Extracts Intelligence</h4>
+        <p>Entity matching, amount extraction, competitor detection, signal classification — all under 2 seconds.</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="num">3</div>
+        <h4>Signals Distributed</h4>
+        <p>Cross-sell, timing, and risk signals routed to the right role — RM, Manager, Head, Risk team.</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="num">4</div>
+        <h4>Action & Feedback</h4>
+        <p>Mark signals as done. Risk alerts loop back. Competitive landscape auto-aggregates. Nothing falls through.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section id="demo">
+  <div class="section-label">Interactive Demo</div>
+  <div class="section-title">See it in action — 8-step guided walkthrough</div>
+  <p class="section-sub">This demo uses construction finance as an example, but the pattern applies to any industry with field teams.</p>
+  <div class="demo-frame">
+    <!-- Replace this src with your deployed Netlify URL -->
+    <iframe src="DEMO_URL_HERE" title="FieldPulse Demo" loading="lazy"></iframe>
+  </div>
+  <p style="text-align:center;font-size:12px;color:var(--label);margin-top:12px;">
+    Demo best viewed on desktop. <a href="DEMO_URL_HERE" target="_blank" style="color:var(--indigo);font-weight:600;">Open in new tab ↗</a>
+  </p>
+</section>
+
+<!-- TECH STACK -->
+<section class="alt" id="tech">
+  <div class="inner">
+    <div class="section-label">Technology</div>
+    <div class="section-title">Production Architecture & Tech Stack</div>
+    <p class="section-sub">Built for scale, security, and real-time intelligence distribution.</p>
+
+    <!-- 3-Layer Architecture -->
+    <div class="arch-layers">
+      <div class="arch-layer" style="border-left:4px solid var(--green)">
+        <div class="layer-icon" style="background:var(--green-bg)">📱</div>
+        <div>
+          <h4>Layer 1 — Capture</h4>
+          <p>Field reps send notes via WhatsApp Business API (or web bot). Supports text, voice notes, and images. Multi-language: English, Hindi, Hinglish.</p>
+          <div class="tags"><span>WhatsApp Business API</span><span>Twilio / Gupshup</span><span>Speech-to-Text</span><span>Voice Notes</span></div>
+        </div>
+      </div>
+      <div class="arch-layer" style="border-left:4px solid var(--purple)">
+        <div class="layer-icon" style="background:var(--purple-bg)">🧠</div>
+        <div>
+          <h4>Layer 2 — AI Processing</h4>
+          <p>NLP engine extracts entities, amounts, competitors, signals. Classifies into cross-sell / timing / risk. Validates against external data sources.</p>
+          <div class="tags"><span>GPT-4 / Claude API</span><span>Entity Recognition</span><span>Signal Classification</span><span>Fuzzy Matching</span><span>RAG Pipeline</span></div>
+        </div>
+      </div>
+      <div class="arch-layer" style="border-left:4px solid var(--indigo)">
+        <div class="layer-icon" style="background:var(--indigo-bg)">📡</div>
+        <div>
+          <h4>Layer 3 — Distribution</h4>
+          <p>Role-based dashboards with real-time push. Signals routed by type, region, and hierarchy. Cross-role notifications and feedback loops.</p>
+          <div class="tags"><span>React / Next.js</span><span>WebSockets</span><span>Role-Based Access</span><span>Push Notifications</span><span>REST API</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tech Grid -->
+    <div class="tech-grid">
+      <div class="tech-card">
+        <h3><span class="dot" style="background:var(--indigo)"></span>Frontend</h3>
+        <div class="tech-item"><span class="name">React / Next.js</span><span class="desc">Server-side rendered dashboards with role-based routing</span></div>
+        <div class="tech-item"><span class="name">TypeScript</span><span class="desc">Type-safe component architecture</span></div>
+        <div class="tech-item"><span class="name">Tailwind CSS</span><span class="desc">Utility-first styling, design system tokens</span></div>
+        <div class="tech-item"><span class="name">Recharts</span><span class="desc">Pipeline funnels, health trends, competitive heatmaps</span></div>
+      </div>
+      <div class="tech-card">
+        <h3><span class="dot" style="background:var(--green)"></span>Backend & APIs</h3>
+        <div class="tech-item"><span class="name">Node.js</span><span class="desc">Express/Fastify API server, webhook handlers</span></div>
+        <div class="tech-item"><span class="name">PostgreSQL</span><span class="desc">Developer profiles, signals, activity logs, audit trail</span></div>
+        <div class="tech-item"><span class="name">Redis</span><span class="desc">Session cache, real-time notification queue</span></div>
+        <div class="tech-item"><span class="name">Prisma ORM</span><span class="desc">Type-safe DB queries, migrations</span></div>
+      </div>
+      <div class="tech-card">
+        <h3><span class="dot" style="background:var(--purple)"></span>AI & NLP</h3>
+        <div class="tech-item"><span class="name">OpenAI / Anthropic</span><span class="desc">Field note parsing, entity extraction, signal classification</span></div>
+        <div class="tech-item"><span class="name">Whisper API</span><span class="desc">Voice-to-text for Hindi/Hinglish field notes</span></div>
+        <div class="tech-item"><span class="name">LangChain</span><span class="desc">RAG pipeline for contextual entity matching</span></div>
+        <div class="tech-item"><span class="name">Vector DB</span><span class="desc">Pinecone/Weaviate for semantic search across signals</span></div>
+      </div>
+      <div class="tech-card">
+        <h3><span class="dot" style="background:var(--amber)"></span>Infrastructure</h3>
+        <div class="tech-item"><span class="name">AWS / Azure</span><span class="desc">ECS/AKS containers, auto-scaling, multi-AZ</span></div>
+        <div class="tech-item"><span class="name">WhatsApp API</span><span class="desc">Twilio or Gupshup for message relay</span></div>
+        <div class="tech-item"><span class="name">Auth0 / Clerk</span><span class="desc">SSO, role-based access control, MFA</span></div>
+        <div class="tech-item"><span class="name">Datadog</span><span class="desc">Monitoring, alerting, log aggregation</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section>
+  <div class="section-label">Integrations</div>
+  <div class="section-title">Plugs into your existing stack</div>
+  <p class="section-sub">FieldPulse is an intelligence layer — it feeds into CRMs, LOS systems, and data warehouses. Not a replacement.</p>
+  <div class="int-grid">
+    <div class="int-card"><div class="emoji">💬</div><h4>WhatsApp Business</h4><p>Primary capture channel</p></div>
+    <div class="int-card"><div class="emoji">☁️</div><h4>Salesforce</h4><p>Push signals to CRM</p></div>
+    <div class="int-card"><div class="emoji">📋</div><h4>HubSpot</h4><p>Activity sync</p></div>
+    <div class="int-card"><div class="emoji">📊</div><h4>Power BI / Tableau</h4><p>Analytics & reporting</p></div>
+    <div class="int-card"><div class="emoji">🔔</div><h4>Slack / Teams</h4><p>Alert routing</p></div>
+    <div class="int-card"><div class="emoji">🏦</div><h4>Core Banking / LOS</h4><p>Pipeline updates</p></div>
+    <div class="int-card"><div class="emoji">📧</div><h4>Email / Calendar</h4><p>Auto-log meetings</p></div>
+    <div class="int-card"><div class="emoji">🔗</div><h4>REST API</h4><p>Custom integrations</p></div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="alt" id="industries">
+  <div class="inner">
+    <div class="section-label">Not Just One Industry</div>
+    <div class="section-title">Any industry with field teams has this problem</div>
+    <p class="section-sub">The demo shows construction finance, but the pattern is universal. Here's how FieldPulse adapts.</p>
+    <div class="ind-grid">
+      <div class="ind-card" style="border-left-color:var(--indigo)">
+        <div class="ind-head">
+          <div class="ind-icon" style="background:var(--indigo-bg)">🏗️</div>
+          <div><h3>Construction Finance / NBFCs</h3><div class="ind-role">RMs → Zonal Heads → Business Head → Credit</div></div>
+        </div>
+        <p>Capture pre-RERA land intelligence, cross-sell LAP/LRD opportunities, monitor developer health, track competitor rates and TAT.</p>
+        <div class="signals">
+          <span class="sig-green">LAP Cross-sell</span>
+          <span class="sig-purple">Pre-RERA Intel</span>
+          <span class="sig-red">Contact Gap</span>
+          <span class="sig-amber">Pipeline Urgency</span>
+        </div>
+      </div>
+      <div class="ind-card" style="border-left-color:var(--green)">
+        <div class="ind-head">
+          <div class="ind-icon" style="background:var(--green-bg)">💊</div>
+          <div><h3>Pharma / Medical Devices</h3><div class="ind-role">MRs → Area Managers → Regional Head → Compliance</div></div>
+        </div>
+        <p>Medical reps visit 8-12 doctors daily. Capture prescription trends, competitor product launches, formulary changes, KOL sentiment shifts.</p>
+        <div class="signals">
+          <span class="sig-green">New Prescriber</span>
+          <span class="sig-amber">Formulary Change</span>
+          <span class="sig-red">Competitor Launch</span>
+          <span class="sig-purple">KOL Sentiment</span>
+        </div>
+      </div>
+      <div class="ind-card" style="border-left-color:var(--amber)">
+        <div class="ind-head">
+          <div class="ind-icon" style="background:var(--amber-bg)">🏪</div>
+          <div><h3>FMCG / Retail Distribution</h3><div class="ind-role">Sales Reps → ASMs → RSMs → National Head</div></div>
+        </div>
+        <p>Field reps cover 20-30 retail outlets daily. Capture shelf-share data, competitor pricing, stockout alerts, new store openings, promo effectiveness.</p>
+        <div class="signals">
+          <span class="sig-red">Stockout Alert</span>
+          <span class="sig-amber">Competitor Pricing</span>
+          <span class="sig-green">New Outlet</span>
+          <span class="sig-purple">Promo Intel</span>
+        </div>
+      </div>
+      <div class="ind-card" style="border-left-color:var(--purple)">
+        <div class="ind-head">
+          <div class="ind-icon" style="background:var(--purple-bg)">🏦</div>
+          <div><h3>Banking / Insurance</h3><div class="ind-role">Agents → Branch Mgrs → Regional → Risk</div></div>
+        </div>
+        <p>Relationship managers meet HNIs and SMEs. Capture investment appetite shifts, competitor offers, churn signals, cross-sell triggers for wealth/insurance.</p>
+        <div class="signals">
+          <span class="sig-green">Wealth Cross-sell</span>
+          <span class="sig-red">Churn Signal</span>
+          <span class="sig-amber">Renewal Window</span>
+          <span class="sig-purple">Market Shift</span>
+        </div>
+      </div>
+      <div class="ind-card" style="border-left-color:var(--red)">
+        <div class="ind-head">
+          <div class="ind-icon" style="background:var(--red-bg)">🏗️</div>
+          <div><h3>Real Estate Brokerage</h3><div class="ind-role">Agents → Team Leads → Brokerage Head</div></div>
+        </div>
+        <p>Agents tour properties and meet buyers daily. Capture pricing trends, buyer sentiment, inventory movement, developer incentive changes.</p>
+        <div class="signals">
+          <span class="sig-amber">Price Drop</span>
+          <span class="sig-green">Buyer Intent</span>
+          <span class="sig-red">Stale Inventory</span>
+          <span class="sig-purple">Developer Incentive</span>
+        </div>
+      </div>
+      <div class="ind-card" style="border-left-color:var(--indigo)">
+        <div class="ind-head">
+          <div class="ind-icon" style="background:var(--indigo-bg)">🔧</div>
+          <div><h3>Industrial / B2B Sales</h3><div class="ind-role">Key Acct Mgrs → Sales Directors → VP Sales</div></div>
+        </div>
+        <p>Account managers visit factories and procurement teams. Capture RFQ signals, competitor displacement opportunities, contract renewal timelines, technical requirements.</p>
+        <div class="signals">
+          <span class="sig-green">RFQ Detected</span>
+          <span class="sig-amber">Renewal Window</span>
+          <span class="sig-red">Competitor Threat</span>
+          <span class="sig-purple">Budget Cycle</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>The intelligence is already being captured.<br/>It just isn't being <span style="color:var(--indigo)">structured</span>.</h2>
+  <p>FieldPulse turns field conversations into a competitive advantage. Every industry, every field team, every conversation.</p>
+  <div class="btns">
+    <a href="#demo" class="primary" style="background:var(--indigo);color:#fff;box-shadow:0 4px 14px rgba(79,70,229,0.3);">Try the Demo</a>
+    <a href="https://github.com/YOUR_USERNAME/fieldpulse-demo" target="_blank" class="secondary" style="background:var(--white);color:var(--sec);border:1px solid var(--border);">View Source ↗</a>
+    <a href="https://aditijainprojects.com/#connect" class="secondary" style="background:var(--white);color:var(--indigo);border:1px solid var(--indigo-ring);">Get in Touch</a>
+  </div>
+</section>
+
+<footer>
+  Built by <a href="https://aditijainprojects.com" target="_blank">Aditi Jain</a> · 2025 · <a href="https://github.com/YOUR_USERNAME/fieldpulse-demo" target="_blank">GitHub</a>
+</footer>
+
+</body>
+</html>
